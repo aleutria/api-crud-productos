@@ -1,0 +1,18 @@
+from sqlalchemy import create_engine
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+class Base(DeclarativeBase):
+    pass
+
+engine = create_engine(DATABASE_URL)
+Base.metadata.create_all(engine) # mira el modelo q te paso y crea sus tablas utilizando este engine
+SessionLocal = sessionmaker(bind=engine) # crea una fabrica de sesiones
+
+def conectar_db_sqlalchemy():
+    return SessionLocal()
