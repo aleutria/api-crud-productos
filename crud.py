@@ -18,6 +18,7 @@ def obtener_productos_sqlalchemy():
     resultado = db.execute(consulta)
     productos = resultado.scalars().all() # scalars()- obtener los objetos q vienen de la consutla en vez de trabajar con filas/tuplas,dame los objetos, valores principales del resultado
     db.close()
+    
     return productos
 
 def buscar_producto_sqlalchemy(nombre):
@@ -26,6 +27,7 @@ def buscar_producto_sqlalchemy(nombre):
     resultado = db.execute(consulta) # aqui ejecuta la consulta utilizando la sesion
     producto = resultado.scalar_one_or_none() # scalar_one_or_none() → devuelve uno o ninguno.
     db.close()
+
     return producto
 
 def actualizar_producto_sqlalchemy(nombre, cantidad):
@@ -33,10 +35,12 @@ def actualizar_producto_sqlalchemy(nombre, cantidad):
     consulta = select(ProductoDB).where(ProductoDB.nombre==nombre)
     resultado = db.execute(consulta)
     producto = resultado.scalar_one_or_none()
+
     if producto is not None:
         producto.cantidad = cantidad
     db.commit()
     db.close()
+
     return producto
 
 def eliminar_producto_sqlalchemy(nombre):
@@ -44,8 +48,10 @@ def eliminar_producto_sqlalchemy(nombre):
     consulta = select(ProductoDB).where(ProductoDB.nombre==nombre)
     resultado = db.execute(consulta)
     producto = resultado.scalar_one_or_none()
+
     if producto is not None:
         db.delete(producto)
         db.commit()
     db.close()
+
     return producto

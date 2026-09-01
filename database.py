@@ -11,7 +11,6 @@ class Base(DeclarativeBase):
     pass
 
 engine = create_engine(DATABASE_URL)
-Base.metadata.create_all(engine) # mira el modelo q te paso y crea sus tablas utilizando este engine
 SessionLocal = sessionmaker(bind=engine) # crea una fabrica de sesiones
 
 def conectar_db_sqlalchemy():
